@@ -1,9 +1,69 @@
 import java.sql.Connection;
-	import java.sql.DriverManager;
-	import java.sql.SQLException;
+import java.sql.Date;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 	import java.sql.Statement;
+import java.util.Random;
+import java.util.Scanner;
 	
 public class Hotels {
+	
+	public static void menu(){
+		boolean exit = true;
+		
+	while (exit) {
+		Scanner sc = new Scanner(System.in);
+	System.out.println("\t \tHOTEL TABLE\t \t \t");
+	System.out.println("\t \tChoose One Option:\t \t");
+	System.out.println("\t\t 1. create Table ");
+	System.out.println("\t\t 2. insert to Table  ");
+	System.out.println("\t\t 3. readFromTableTable ");
+	System.out.println("\t\t 4. getById ");
+	System.out.println("\t\t 5. updateById ");
+	System.out.println("\t\t 6. deleteById ");
+	System.out.println("\t\t 7. makeIsActiveFalseById");
+	System.out.println("\t\t 8. back to basic menu");
+	
+//     boolean isExit = true;
+    int option = sc.nextInt();
+	switch (option) {
+	case 1:
+		Hotels.Hotel();
+
+	break;
+
+	case 2:
+		Hotels.insertIntoTable();
+	break;
+	
+	case 3:
+		Hotels.readFromTable();
+
+	break;
+	case 4:
+		Hotels.getById();
+	break;
+	case 5:
+		Hotels.updateById();
+	break;
+	case 6:
+		Hotels.deleteById();;
+	break;
+	case 7:
+		Hotels.makeIsActiveFalseById();;
+	break;
+	
+
+	}
+	}
+	exit = false;
+	
+	
+}
+	
 	
 	
 		public static void Hotel(){
@@ -18,8 +78,8 @@ public class Hotels {
 			      + " hotel_name VARCHAR(10) not null,"
 			      + " hotel_location VARCHAR(10), "
 			      + " created_date Date not null,"
-			      +"updated_date Date,"
-			      +"is_Active Boolean not null)"; 
+			      + "updated_date Date,"
+			      + "is_Active Boolean not null)"; 
 			           
 			         int m=stmt.executeUpdate(sql);
 			         if (m >=  0)
@@ -34,4 +94,189 @@ public class Hotels {
 				            System.err.println(ex);
 			   }
 			}
+//		
+
+		
+    public static void insertIntoTable(){
+    	 final String url = "jdbc:mysql://localhost:3306/HotelDBMS";
+
+  	   final String user = "root";
+  	   final String pass = "root";
+  	   
+  	 Scanner scanner = new Scanner(System.in);
+  	System.out.println ("Enter the number of Hotels:");
+      Integer numOfHotels=scanner.nextInt();
+      
+		 String hotel_name="MM";
+		 String hotel_location="Muscut";
+		 Date created_date=new Date(System.currentTimeMillis());
+		 Date updated_date= new Date(System.currentTimeMillis());
+		 boolean is_Active=true;
+		 
+		 Random rn = new Random();
+	  	   Integer numberToAdd = rn.nextInt(100);
+	
+		 for(int i=0;i<=numOfHotels;i++) {
+			  String sql = "insert into hotels values ("+i+numberToAdd+", '"
+		 +hotel_name+i+"', '"+hotel_location+i+"','"+
+					  created_date+"', '"+updated_date+"', "+is_Active+")";
+
+		    Connection conn = null;
+		  try{
+			  Driver driver = (Driver) Class.forName("com.mysql.cj.jdbc.Driver")
+					  .newInstance();
+            DriverManager.registerDriver(driver);
+            conn = DriverManager.getConnection(url, user,
+                    pass);
+            Statement stmt = conn.createStatement();
+            int m = stmt.executeUpdate(sql);
+          if (m >=  0)
+            System.out.println(
+                    "inserted successfully : " + sql);
+        else
+            System.out.println("insertion failed");
+        conn.close();
+			 }catch (Exception ex) {
+		         System.out.println(ex);
+		     }
+		 }
+         
+		    }
+
+
+		public static void readFromTable(){
+			final String url = "jdbc:mysql://localhost:3306/HotelDBMS";
+
+			   final String user = "root";
+			   final String pass = "root";
+			   Scanner scanner = new Scanner(System.in);
+			  	System.out.println ("input number os users you want to show");
+			  	int count=scanner.nextInt();
+			      
+			      
+			 try(Connection conn = DriverManager.getConnection(url, user, pass);
+			         Statement stmt = conn.createStatement();
+			      ) {
+//				 
+				 ResultSet rs=stmt.executeQuery("SELECT * FROM Hotels");
+				 while(rs.next()) 
+				 { 
+					 int id=rs.getInt("id");
+					String hotel_name=rs.getString("hotel_name");
+					String hotel_location=rs.getString("hotel_location");
+					Date created_date=rs.getDate("created_date");
+					Date updated_date=rs.getDate("updated_date");
+					Boolean is_Active=rs.getBoolean("is_Active");
+				     System.out.println("id :" + id);
+				     System.out.println("hotel_name :" +hotel_name);
+				     System.out.println("hotel_location" +hotel_location);
+				     System.out.println("created_date" +created_date);
+				     System.out.println("updated_date" +updated_date);
+				     System.out.println("is_Active"+is_Active);
+				     conn.close() ;
+				 }
+			 }  catch (Exception ex) {
+		           
+		            System.err.println(ex);
+	   }
+		    }
+		
+		
+		
+		    
+		public static void getById(){
+			final String url = "jdbc:mysql://localhost:3306/HotelDBMS";
+
+			   final String user = "root";
+			   final String pass = "root";
+			   Scanner scanner = new Scanner(System.in);
+			  	System.out.println ("input id you want to show");
+			      Integer inputID=scanner.nextInt();
+			      
+			 try(Connection conn = DriverManager.getConnection(url, user, pass);
+			         Statement stmt = conn.createStatement();
+			      ) {
+//				 String sql ="SELECT * FROM Hotels;
+				 ResultSet rs=stmt.executeQuery("SELECT * FROM Hotels");
+				 while(rs.next()) 
+				 { 
+					inputID=rs.getInt("id");
+					String hotel_name=rs.getString("hotel_name");
+					String hotel_location=rs.getString("hotel_location");
+					Date created_date=rs.getDate("created_date");
+					Date updated_date=rs.getDate("updated_date");
+					Boolean is_Active=rs.getBoolean("is_Active");
+				     System.out.println("id :" + inputID);
+				     System.out.println("hotel_name :" +hotel_name);
+				     System.out.println("hotel_location" +hotel_location);
+				     System.out.println("created_date" +created_date);
+				     System.out.println("updated_date" +updated_date);
+				     System.out.println("is_Active"+is_Active);
+				     conn.close() ;
+				 }
+			 }  catch (Exception ex) {
+		           
+		            System.err.println(ex);
+	   }
+		    }
+		
+		
+		
+		public static void updateById(){
+			final String url = "jdbc:mysql://localhost:3306/HotelDBMS";
+
+			   final String user = "root";
+			   final String pass = "root";
+			 try(Connection conn = DriverManager.getConnection(url, user, pass);
+			         Statement stmt = conn.createStatement();
+			      ) {
+				 ResultSet rs=stmt.executeQuery("update Hotels set hotel_name=' where id in(1,4)");
+				 System.out.println("Record has been updated in the table successfully..................");
+				     conn.close() ;
+			 }  catch (Exception ex) {
+		           
+		            System.err.println(ex);
+	   }
+		    }
+		
+		public static void deleteById() {
+		   final String url = "jdbc:mysql://localhost:3306/HotelDBMS";
+
+			   final String user = "root";
+			   final String pass = "root";
+			 try(Connection conn = DriverManager.getConnection(url, user, pass);
+			         Statement stmt = conn.createStatement();
+			      ) {
+				 ResultSet rs=stmt.executeQuery("delete from  Hotels where id=101");
+				 System.out.println("Record is deleted from the table successfully..................");
+				     conn.close() ;
+			 }  catch (Exception ex) {
+		           
+		            System.err.println(ex);
+	   }
 		}
+		public static void makeIsActiveFalseById() {
+			 final String url = "jdbc:mysql://localhost:3306/HotelDBMS";
+
+			   final String user = "root";
+			   final String pass = "root";
+			 try(Connection conn = DriverManager.getConnection(url, user, pass);
+			         Statement stmt = conn.createStatement();
+			      ) {
+//				 ResultSet rs=stmt.executeQuery("ALTER TABLE Hotels RENAME COLUMN is_Active TO isActive");
+				 String query= "ALTER TABLE student RENAME COLUMN roll_no TO RollNo";
+	            int result = stmt.executeUpdate(query);
+	            if (result > 0)
+	                System.out.println("table successfully updated.");
+	            else
+	                System.out.println("unable to update");
+	            conn.close();
+			 }  catch (Exception ex) {
+		           
+		            System.err.println(ex);
+	   }
+			
+		    }
+		
+		
+}

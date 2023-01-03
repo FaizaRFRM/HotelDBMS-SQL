@@ -28,4 +28,5 @@ public class RoomType {
 			            System.err.println(ex);
 		   }
 		}
+	
 	}

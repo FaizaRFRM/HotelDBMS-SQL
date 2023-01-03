@@ -11,7 +11,7 @@ public class Rooms {
 		         Statement stmt = conn.createStatement();
 		      ) {		      
 		          String sql = "CREATE TABLE Rooms(" +"  id Int Primary Key, "
-		      + " room_type_id int REFERENCES Room_Type(id), "
+		      + " room_type_id int  REFERENCES Room_Type(id), "
 		       + " hotel_id int REFERENCES Hotels(id), "
 		      + " created_date Date not null,"
 		      +"updated_date Date,"+"is_Active Boolean not null)"; 
@@ -30,4 +30,5 @@ public class Rooms {
 			            System.err.println(ex);
 		   }
 		}
+	
 }

@@ -1,5 +1,6 @@
 import java.sql.SQLException;
 import java.util.Scanner;
+import java.sql.Connection;
 
 public class Main {
 
@@ -17,13 +18,14 @@ public class Main {
 		System.out.println("\t\t 5. EmployeeTypeTable ");
 		System.out.println("\t\t 6. EmployeesTable ");
 		System.out.println("\t\t 7. Exit ");
+		System.out.println(" *********************************************** ");
 		
 //	     boolean isExit = true;
 	    int option = sc.nextInt();
 		switch (option) {
 		case 1:
 			Hotels hotelTable=new Hotels();
-			hotelTable.Hotel();
+			hotelTable.menu();
 
 		break;
 
@@ -34,7 +36,7 @@ public class Main {
 		
 		case 3:
 			Rooms RoomsTable=new Rooms();
-			RoomsTable.Room();;
+			RoomsTable.Room();
 
 		break;
 		case 4:
