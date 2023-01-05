@@ -31,12 +31,12 @@ public class Main {
 
 		case 2:
 			RoomType RoomTypeTable=new RoomType();
-			RoomTypeTable.RoomT();
+			RoomTypeTable.menu();
 		break;
 		
 		case 3:
 			Rooms RoomsTable=new Rooms();
-			RoomsTable.Room();
+			RoomsTable.menu();
 
 		break;
 		case 4:
