@@ -12,7 +12,7 @@ public class RoomType {
 	
 while (exit) {
 	Scanner sc = new Scanner(System.in);
-System.out.println("\t \tHOTEL TABLE\t \t \t");
+System.out.println("\t \tRoomType TABLE\t \t \t");
 System.out.println("\t \tChoose One Option:\t \t");
 System.out.println("\t\t 1. create Table ");
 System.out.println("\t\t 2. insert to Table  ");
@@ -259,7 +259,7 @@ public static void insertIntoTable(){
 
 		  	System.out.println ("inter id uou want to delete");
 		      Integer id=scanner.nextInt();
-		      String sql = "delete from  Room_Type where id="+id;
+		      String sql = "delete from Room_Type where id="+id;
 				 
 				 Connection conn = null;
 		      

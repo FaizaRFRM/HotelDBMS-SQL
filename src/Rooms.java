@@ -12,7 +12,7 @@ public class Rooms {
 		
 	while (exit) {
 		Scanner sc = new Scanner(System.in);
-	System.out.println("\t \tHOTEL TABLE\t \t \t");
+	System.out.println("\t \tRooms TABLE\t \t \t");
 	System.out.println("\t \tChoose One Option:\t \t");
 	System.out.println("\t\t 1. create Table ");
 	System.out.println("\t\t 2. insert to Table  ");
@@ -69,7 +69,8 @@ public static void Room(){
 		 try(Connection conn = DriverManager.getConnection(url, user, pass);
 		         Statement stmt = conn.createStatement();
 		      ) {		      
-		          String sql = "CREATE TABLE Rooms(" +"  id Int Primary Key, "
+		          String sql = "CREATE "
+		          		+ " Rooms(" +"  id Int Primary Key, "
 		      + " room_type_id int  REFERENCES Room_Type(id), "
 		       + " hotel_id int REFERENCES Hotels(id), "
 		      + " created_date Date not null,"
@@ -170,7 +171,6 @@ public static void Room(){
 				    
 			 
 			         conn.close() ; 
-//				     conn.close() ;
 				 }
 			 }  catch (Exception ex) {
 		           
@@ -268,7 +268,7 @@ public static void Room(){
 
 			  	System.out.println ("inter id uou want to delete");
 			      Integer id=scanner.nextInt();
-			      String sql = "delete from  Room_Type where id="+id;
+			      String sql = "delete from Rooms where id="+id;
 					 
 					 Connection conn = null;
 			      
@@ -306,7 +306,7 @@ public static void Room(){
 
 			  	System.out.println ("input id you want to update is_active to true");
 			      Integer id=scanner.nextInt();
-			      String sql = "update Room_Type set is_Active='0' where id="+id;
+			      String sql = "update Rooms set is_Active='0' where id="+id;
 					 
 					 Connection conn = null;
 			      

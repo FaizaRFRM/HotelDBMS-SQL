@@ -35,7 +35,7 @@ public class Hotels {
 	break;
 
 	case 2:
-		Hotels.insertIntoTable();
+		Hotels.insertIntoTable(option);
 	break;
 	
 	case 3:
@@ -65,7 +65,17 @@ public class Hotels {
 	
 	
 	
-		public static void Hotel(){
+	
+	 
+	  
+//	**********************************************************************
+//	*************************************************************************
+		public static void connect(){
+			
+			
+			
+		}
+			public static void Hotel(){
 			final String url = "jdbc:mysql://localhost:3306/HotelDBMS";
 
 			   final String user = "root";
@@ -94,19 +104,17 @@ public class Hotels {
 				            System.err.println(ex);
 			   }
 			}
-//		
+//		**********************************************************************
+//		*************************************************************************
 
 		
-    public static void insertIntoTable(){
+    public static void insertIntoTable(int f){
     	 final String url = "jdbc:mysql://localhost:3306/HotelDBMS";
 
   	   final String user = "root";
   	   final String pass = "root";
-  	   
   	 Scanner scanner = new Scanner(System.in);
-  	System.out.println ("Enter the number of Hotels:");
-      Integer numOfHotels=scanner.nextInt();
-      
+  	
 		 String hotel_name="MM";
 		 String hotel_location="Muscut";
 		 Date created_date=new Date(System.currentTimeMillis());
@@ -116,7 +124,7 @@ public class Hotels {
 		 Random rn = new Random();
 	  	   Integer numberToAdd = rn.nextInt(100);
 	
-		 for(int i=0;i<=numOfHotels;i++) {
+		 for(int i=0;i<=f;i++) {
 			  String sql = "insert into hotels values ("+i+numberToAdd+", '"
 		 +hotel_name+i+"', '"+hotel_location+i+"','"+
 					  created_date+"', '"+updated_date+"', "+is_Active+")";
@@ -142,10 +150,12 @@ public class Hotels {
 		 }
          
 		    }
-
+//	**********************************************************************
+//	*************************************************************************
 
 		public static void readFromTable(){
 			final String url = "jdbc:mysql://localhost:3306/HotelDBMS";
+			   Connection con=null;
 
 			   final String user = "root";
 			   final String pass = "root";
@@ -157,7 +167,9 @@ public class Hotels {
 			 try(Connection conn = DriverManager.getConnection(url, user, pass);
 			         Statement stmt = conn.createStatement();
 			      ) {
-//				 
+				 Driver driver = (Driver) Class.forName("com.mysql.cj.jdbc.Driver")
+						  .newInstance();
+	            DriverManager.registerDriver(driver);
 				 ResultSet rs=stmt.executeQuery("SELECT * FROM Hotels");
 				 while(rs.next()&&count<number) 
 				 { 
@@ -184,8 +196,32 @@ public class Hotels {
 	   }
 		    }
 		
-		
-		
+//		**********************************************************************
+//		*************************************************************************
+//		public static void connec(){
+//			final String url = "jdbc:mysql://localhost:3306/HotelDBMS";
+//
+//			   final String user = "root";
+//			   final String pass = "root";
+//			   Scanner scanner = new Scanner(System.in);
+//			  	System.out.println ("input id you want to show");
+//			      Integer inputID=scanner.nextInt();
+//			      
+//			 try(Connection conn = DriverManager.getConnection(url, user, pass);
+//			         Statement stmt = conn.createStatement();
+//			      ) {
+//				 ResultSet rs=stmt.executeQuery("SELECT * FROM Hotels");
+//				 while(rs.next()) 
+//				 { 
+//					 Driver driver = (Driver) Class.forName("com.mysql.cj.jdbc.Driver")
+//							  .newInstance();
+//		            DriverManager.registerDriver(driver);
+//				 }
+//			 } catch (Exception ex) {
+//		           
+//		            System.err.println(ex);
+//			 }
+//		}
 		    
 		public static void getById(){
 			final String url = "jdbc:mysql://localhost:3306/HotelDBMS";
@@ -195,19 +231,23 @@ public class Hotels {
 			   Scanner scanner = new Scanner(System.in);
 			  	System.out.println ("input id you want to show");
 			      Integer inputID=scanner.nextInt();
-			      
+				   Connection con=null;
+
 			 try(Connection conn = DriverManager.getConnection(url, user, pass);
 			         Statement stmt = conn.createStatement();
 			      ) {
-				 ResultSet rs=stmt.executeQuery("SELECT * FROM Hotels");
-				 while(rs.next()) 
+				 ResultSet res=stmt.executeQuery("SELECT * FROM Hotels");
+				 while(res.next()) 
 				 { 
-					inputID=rs.getInt("id");
-					String hotel_name=rs.getString("hotel_name");
-					String hotel_location=rs.getString("hotel_location");
-					Date created_date=rs.getDate("created_date");
-					Date updated_date=rs.getDate("updated_date");
-					Boolean is_Active=rs.getBoolean("is_Active");
+					 Driver driver = (Driver) Class.forName("com.mysql.cj.jdbc.Driver")
+							  .newInstance();
+		            DriverManager.registerDriver(driver);
+					inputID=res.getInt("id");
+					String hotel_name=res.getString("hotel_name");
+					String hotel_location=res.getString("hotel_location");
+					Date created_date=res.getDate("created_date");
+					Date updated_date=res.getDate("updated_date");
+					Boolean is_Active=res.getBoolean("is_Active");
 				     System.out.println("id :" + inputID);
 				     System.out.println("hotel_name :" +hotel_name);
 				     System.out.println("hotel_location" +hotel_location);
@@ -222,7 +262,43 @@ public class Hotels {
 	   }
 		    }
 		
+		public static void print(int w){
+			final String url = "jdbc:mysql://localhost:3306/HotelDBMS";
+			   Connection con=null;
+
+			   final String user = "root";
+			   final String pass = "root";
+//			      Connection conn=null;
+			 try(Connection conn = DriverManager.getConnection(url, user, pass);
+			         Statement stmt = conn.createStatement();
+			      ) {
+				 int count=1;
+				 String sql="SELECT * FROM Hotels order  by id limit "+w;
+				 ResultSet rst=stmt.executeQuery(sql);
+				 while(rst.next()&&count<=w) {
+				
+					int id=rst.getInt("id");
+					String hotel_name=rst.getString("hotel_name");
+					String hotel_location=rst.getString("hotel_location");
+					Date created_date=rst.getDate("created_date");
+					Date updated_date=rst.getDate("updated_date");
+					Boolean is_Active=rst.getBoolean("is_Active");
+				     System.out.println("id :" + id);
+				     System.out.println("hotel_name :" +hotel_name);
+				     System.out.println("hotel_location" +hotel_location);
+				     System.out.println("created_date" +created_date);
+				     System.out.println("updated_date" +updated_date);
+				     System.out.println("is_Active"+is_Active);
+				     conn.close() ;
+				 }
+			 }  catch (Exception ex) {
+		           
+		            System.err.println(ex);
+	   }
+		    }
 		
+//		**********************************************************************
+//		*************************************************************************	
 		
 		public static void updateById(){
 			
@@ -264,6 +340,9 @@ public class Hotels {
 	   }
 		    }
 		
+//		**********************************************************************
+//		*************************************************************************
+		
 		public static void deleteById() {
 			final String url = "jdbc:mysql://localhost:3306/HotelDBMS";
 
@@ -302,6 +381,10 @@ public class Hotels {
 		            System.err.println(ex);
 	   }
 		    }
+		
+//		**********************************************************************
+//		*************************************************************************
+		
 		public static void makeIsActiveFalseById() {
 			final String url = "jdbc:mysql://localhost:3306/HotelDBMS";
 
