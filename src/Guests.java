@@ -67,7 +67,7 @@ public class Guests {
 		 try(Connection conn = DriverManager.getConnection(url, user, pass);
 		         Statement stmt = conn.createStatement();
 		      ) {		      
-		          String sql = "CREATE TABLE Guests(" +"  id Int Primary Key, "
+		          String sql = "CREATE TABLE Guests(" +"  id Int Primary Key AUTO_INCREMENT, "
 		      + " guest_name Varchar(10)not null, "
 		       + " guest_phone Varchar(10)not null, "
 		       + " guest_accompanying_members int not null, "

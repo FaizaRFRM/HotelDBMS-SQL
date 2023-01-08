@@ -68,7 +68,7 @@ public static void RoomT(){
 	 try(Connection conn = DriverManager.getConnection(url, user, pass);
 	         Statement stmt = conn.createStatement();
 	      ) {		      
-	          String sql = "CREATE TABLE Room_Type(" +"  id Int Primary Key, "
+	          String sql = "CREATE TABLE Room_Type("+"id Int Primary Key AUTO_INCREMENT, "
 	      + " room_type_name VARCHAR(10) not null, "
 	      + " created_date Date not null,"
 	      +"updated_date Date,"+"is_Active Boolean not null)"; 
@@ -133,21 +133,19 @@ public static void insertIntoTable(){
 
 
 	public static void readFromTable(){
-		final String url = "jdbc:mysql://localhost:3306/HotelDBMS";
+			final String url = "jdbc:mysql://localhost:3306/HotelDBMS";
+ 		   final String user = "root";
+ 		   final String pass = "root";
+ 		   final String QUERY = "SELECT * FROM Rooms ORDER BY id LIMIT 10";
 
-		   final String user = "root";
-		   final String pass = "root";
-		   Scanner scanner = new Scanner(System.in);
-		  	System.out.println ("input number of records you want to show");
-		  	int number=scanner.nextInt();
-		      int count=0;
-		      
-		 try(Connection conn = DriverManager.getConnection(url, user, pass);
-		         Statement stmt = conn.createStatement();
-		      ) {
-			 
-			 ResultSet rs=stmt.executeQuery("SELECT * FROM Room_Type");
-			 while(rs.next()&&count<number) 
+ 		      Connection conn=null;
+ 		 try {
+ 			 conn = DriverManager.getConnection(url, user, pass);
+ 		 Driver driver = (Driver) Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+          Statement stmt = conn.createStatement();
+ 	     DriverManager.registerDriver(driver);
+ 	     ResultSet rs=stmt.executeQuery(QUERY);
+			 while(rs.next()) 
 			 { 
 				 int id=rs.getInt("id");
 				String room_type_name=rs.getString("room_type_name");
@@ -159,12 +157,10 @@ public static void insertIntoTable(){
 			     System.out.println("created_date" +created_date);
 			     System.out.println("updated_date" +updated_date);
 			     System.out.println("is_Active"+is_Active);
-			     count++;
 			    
-		 
-		         conn.close() ; 
-//			     conn.close() ;
 			 }
+	         conn.close() ; 
+
 		 }  catch (Exception ex) {
 	           
 	            System.err.println(ex);

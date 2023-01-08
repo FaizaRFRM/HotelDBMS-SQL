@@ -23,17 +23,27 @@ public class Main {
 	    int option = sc.nextInt();
 		switch (option) {
 		
+		case 0:
+		  	
+//			Hotels.menu();
+//			RoomType.menu();
+			Rooms.menu();
+//			Guests.menu();
+//			Employee_Type.menu();
+//			Employees.menu();
+			
+		break;
+
 		case 1:
 			System.out.println ("Enter the number of Hotels:");
 		  	int f=scanner.nextInt();
 		  	Hotels.insertIntoTable(f);
-
-		break;
-
-		case 2:
-			Hotels.insertIntoTable(1);
 		break;
 		
+		case 2:
+			Hotels.insertIntoTable(1);
+
+		break;
 		case 3:
 			Hotels.print(10);
 
@@ -45,9 +55,6 @@ public class Main {
 			System.out.println ("Enter the number of Hotels you want");
 		  	int P=scanner.nextInt();
 		  	Hotels.print(P);
-		break;
-		case 6:
-			Hotels.Hotel();
 		break;
 		}
 				}exit = false;

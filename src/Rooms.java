@@ -35,7 +35,10 @@ public class Rooms {
 	break;
 
 	case 3:
-		Rooms.readFromTable();
+		System.out.println ("input number of records you want to show");
+
+		int s=sc.nextInt();
+		Rooms.readFromTable(s);
 
 	break;
 	case 4:
@@ -69,8 +72,7 @@ public static void Room(){
 		 try(Connection conn = DriverManager.getConnection(url, user, pass);
 		         Statement stmt = conn.createStatement();
 		      ) {		      
-		          String sql = "CREATE "
-		          		+ " Rooms(" +"  id Int Primary Key, "
+		          String sql = "CREATE TABLE Rooms(" +"  id Int Primary Key AUTO_INCREMENT, "
 		      + " room_type_id int  REFERENCES Room_Type(id), "
 		       + " hotel_id int REFERENCES Hotels(id), "
 		      + " created_date Date not null,"
@@ -138,22 +140,25 @@ public static void Room(){
 		    }
 
 
-		public static void readFromTable(){
+		public static void readFromTable( int a){
 			final String url = "jdbc:mysql://localhost:3306/HotelDBMS";
+ 		   final String user = "root";
+ 		   final String pass = "root";
+ 		   
+// 		   Scanner scanner = new Scanner(System.in);
+//			  	System.out.println ("input number of records you want to show");
+//			  	int number=scanner.nextInt();
+ 		   
+ 		  String QUERY = "SELECT * FROM Rooms order by id limit "+a+"";
 
-			   final String user = "root";
-			   final String pass = "root";
-			   Scanner scanner = new Scanner(System.in);
-			  	System.out.println ("input number of records you want to show");
-			  	int number=scanner.nextInt();
-			      int count=0;
-			      
-			 try(Connection conn = DriverManager.getConnection(url, user, pass);
-			         Statement stmt = conn.createStatement();
-			      ) {
-				 
-				 ResultSet rs=stmt.executeQuery("SELECT * FROM Rooms");
-				 while(rs.next()&&count<number) 
+ 		      Connection conn=null;
+ 		 try {
+ 			 conn = DriverManager.getConnection(url, user, pass);
+ 		 Driver driver = (Driver) Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+          Statement stmt = conn.createStatement();
+ 	     DriverManager.registerDriver(driver);
+ 	     ResultSet rs=stmt.executeQuery(QUERY);
+				 while(rs.next()) 
 				 { 
 					 int id=rs.getInt("id");
 					int room_type_id=rs.getInt("room_type_id");
@@ -167,11 +172,9 @@ public static void Room(){
 				     System.out.println("created_date" +created_date);
 				     System.out.println("updated_date" +updated_date);
 				     System.out.println("is_Active"+is_Active);
-				     count++;
 				    
-			 
-			         conn.close() ; 
 				 }
+				 conn.close() ; 
 			 }  catch (Exception ex) {
 		           
 		            System.err.println(ex);

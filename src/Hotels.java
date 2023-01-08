@@ -13,9 +13,9 @@ public class Hotels {
 	
 	public static void menu(){
 		boolean exit = true;
-		
-	while (exit) {
 		Scanner sc = new Scanner(System.in);
+
+	while (exit) {
 	System.out.println("\t \tHOTEL TABLE\t \t \t");
 	System.out.println("\t \tChoose One Option:\t \t");
 	System.out.println("\t\t 1. create Table ");
@@ -39,7 +39,10 @@ public class Hotels {
 	break;
 	
 	case 3:
-		Hotels.readFromTable();
+	  	System.out.println ("input number of records you want to show");
+
+		int s=sc.nextInt();
+		Hotels.readFromTable(s);
 
 	break;
 	case 4:
@@ -151,28 +154,34 @@ public class Hotels {
 //	*************************************************************************
 
 
-    	public static void readFromTable(){
+    	public static void readFromTable(int a){
 
     		final String url = "jdbc:mysql://localhost:3306/HotelDBMS";
     		   final String user = "root";
     		   final String pass = "root";
-    		   final String QUERY = "SELECT * FROM Hotels ORDER BY id LIMIT 10";
+    		   
+//    		   Scanner scanner = new Scanner(System.in);
+//			  	System.out.println ("input number of records you want to show");
+//			  	int number=scanner.nextInt();
+    		   
+    		  String QUERY = "SELECT * FROM Hotels order by id limit "+a+"";
 
     		      Connection conn=null;
+    		      
     		 try {
     			 conn = DriverManager.getConnection(url, user, pass);
     		 Driver driver = (Driver) Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
              Statement stmt = conn.createStatement();
     	     DriverManager.registerDriver(driver);
-    	     ResultSet rst=stmt.executeQuery(QUERY);
-    			 while(rst.next()) {
+    	     ResultSet rs=stmt.executeQuery(QUERY);
+    			 while(rs.next()) {
     			
-    				int id=rst.getInt("id");
-    				String hotel_name=rst.getString("hotel_name");
-    				String hotel_location=rst.getString("hotel_location");
-    				Date created_date=rst.getDate("created_date");
-    				Date updated_date=rst.getDate("updated_date");
-    				Boolean is_Active=rst.getBoolean("is_Active");
+    				int id=rs.getInt("id");
+    				String hotel_name=rs.getString("hotel_name");
+    				String hotel_location=rs.getString("hotel_location");
+    				Date created_date=rs.getDate("created_date");
+    				Date updated_date=rs.getDate("updated_date");
+    				Boolean is_Active=rs.getBoolean("is_Active");
     			     System.out.println("id :" + id);
     			     System.out.println("hotel_name :" +hotel_name);
     			     System.out.println("hotel_location" +hotel_location);

@@ -22,30 +22,30 @@ public class Employees {
 	int option = sc.nextInt();
 	switch (option) {
 	case 1:
-		Rooms.Room();
+		Employees.Employee();
 
 	break;
 
-	case 2:
-		Rooms.insertIntoTable();
-	break;
-
-	case 3:
-		Rooms.readFromTable();
-
-	break;
-	case 4:
-		Rooms.getById();
-	break;
-	case 5:
-		Rooms.updateById();
-	break;
-	case 6:
-		Rooms.deleteById();;
-	break;
-	case 7:
-		Rooms.makeIsActiveFalseById();;
-	break;
+//	case 2:
+//		Employees.insertIntoTable();
+//	break;
+//
+//	case 3:
+//		Employees.readFromTable();
+//
+//	break;
+//	case 4:
+//		Employees.getById();
+//	break;
+//	case 5:
+//		Employees.updateById();
+//	break;
+//	case 6:
+//		Employees.deleteById();;
+//	break;
+//	case 7:
+//		Employees.makeIsActiveFalseById();;
+//	break;
 
 
 	}
@@ -63,7 +63,7 @@ public class Employees {
 		 try(Connection conn = DriverManager.getConnection(url, user, pass);
 		         Statement stmt = conn.createStatement();
 		      ) {		      
-		          String sql = "CREATE TABLE Employees(" +"  id Int Primary Key, "
+		          String sql = "CREATE TABLE Employees(" +"  id Int Primary Key AUTO_INCREMENT, "
 		       + " employee_type_id int REFERENCES Employee_Type(id), "
 		       + " room_id int REFERENCES Hotels(id), "
 		      + " created_date Date not null,"

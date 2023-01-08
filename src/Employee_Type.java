@@ -23,30 +23,30 @@ public class Employee_Type {
 	int option = sc.nextInt();
 	switch (option) {
 	case 1:
-		Rooms.Room();
+		Employee_Type.EmployeeT();
 
 	break;
 
-	case 2:
-		Rooms.insertIntoTable();
-	break;
-
-	case 3:
-		Rooms.readFromTable();
-
-	break;
-	case 4:
-		Rooms.getById();
-	break;
-	case 5:
-		Rooms.updateById();
-	break;
-	case 6:
-		Rooms.deleteById();;
-	break;
-	case 7:
-		Rooms.makeIsActiveFalseById();;
-	break;
+//	case 2:
+//		Employee_Type.insertIntoTable();
+//	break;
+//
+//	case 3:
+//		Employee_Type.readFromTable();
+//
+//	break;
+//	case 4:
+//		Employee_Type.getById();
+//	break;
+//	case 5:
+//		Employee_Type.updateById();
+//	break;
+//	case 6:
+//		Employee_Type.deleteById();;
+//	break;
+//	case 7:
+//		Employee_Type.makeIsActiveFalseById();;
+//	break;
 
 
 	}
@@ -64,7 +64,7 @@ public class Employee_Type {
 		 try(Connection conn = DriverManager.getConnection(url, user, pass);
 		         Statement stmt = conn.createStatement();
 		      ) {		      
-		          String sql = "CREATE TABLE Employee_Type(" +"  id Int Primary Key, "
+		          String sql = "CREATE TABLE Employee_Type(" +"  id Int Primary Key AUTO_INCREMENT, "
 		      + " employee_type_name Varchar(10)not null, "
 		      + " created_date Date not null,"
 		      +"updated_date Date,"+"is_Active Boolean not null)";
