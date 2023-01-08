@@ -11,7 +11,7 @@ public class Main {
 				while (exit) {
 			Scanner sc = new Scanner(System.in);
 		System.out.println("\t \tChoose One Option:\t \t");
-		System.out.println("\t\t 1. insert 10000 hotelse ");
+		System.out.println("\t\t 1. insert 10000 hotels ");
 		System.out.println("\t\t 2. inser 1 hotel ");
 		System.out.println("\t\t 3. print 10 hotels ");
 		System.out.println("\t\t 4.Make first 10 hotels 'is_Active' = false ");
@@ -36,15 +36,18 @@ public class Main {
 		
 		case 3:
 			Hotels.print(10);
+
 		break;
 		case 4:
-			
+			Hotels.Is_Active_False();
 		break;
 		case 5:
-			
+			System.out.println ("Enter the number of Hotels you want");
+		  	int P=scanner.nextInt();
+		  	Hotels.print(P);
 		break;
 		case 6:
-			
+			Hotels.Hotel();
 		break;
 		}
 				}exit = false;
