@@ -35,7 +35,7 @@ public class Hotels {
 	break;
 
 	case 2:
-		Hotels.insertIntoTable(option);
+		Hotels.insertIntoTable(0);
 	break;
 	
 	case 3:
@@ -114,6 +114,11 @@ public class Hotels {
   	   final String pass = "root";
   	 Scanner scanner = new Scanner(System.in);
   	
+  	 
+  	 System.out.print("which hotel you want");
+	 String input=scanner.next();
+	 String query="select id from guests where guest_name=String";
+  	 
 		 String hotel_name="MM";
 		 String hotel_location="Muscut";
 		 Date created_date=new Date(System.currentTimeMillis());
@@ -136,6 +141,8 @@ public class Hotels {
             conn = DriverManager.getConnection(url, user,
                     pass);
             Statement stmt = conn.createStatement();
+	  		 ResultSet rs=stmt.executeQuery(query);
+
             int m = stmt.executeUpdate(sql);
           if (m >=0)
             System.out.println(
@@ -160,9 +167,7 @@ public class Hotels {
     		   final String user = "root";
     		   final String pass = "root";
     		   
-//    		   Scanner scanner = new Scanner(System.in);
-//			  	System.out.println ("input number of records you want to show");
-//			  	int number=scanner.nextInt();
+    		   
     		   
     		  String QUERY = "SELECT * FROM Hotels order by id limit "+a+"";
 

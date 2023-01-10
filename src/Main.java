@@ -27,8 +27,8 @@ public class Main {
 		  	
 //			Hotels.menu();
 //			RoomType.menu();
-			Rooms.menu();
-//			Guests.menu();
+//			Rooms.menu();
+			Guests.menu();
 //			Employee_Type.menu();
 //			Employees.menu();
 			

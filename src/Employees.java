@@ -1,6 +1,9 @@
 import java.sql.Connection;
-	import java.sql.DriverManager;
+import java.sql.Date;
+import java.sql.Driver;
+import java.sql.DriverManager;
 	import java.sql.Statement;
+import java.util.Random;
 import java.util.Scanner;
 public class Employees {
 	public static void menu(){
@@ -26,9 +29,11 @@ public class Employees {
 
 	break;
 
-//	case 2:
-//		Employees.insertIntoTable();
-//	break;
+	case 2:
+		System.out.println ("Enter the number of Hotels:");
+	  	int f=sc.nextInt();
+		Employees.insertIntoTable(f);
+	break;
 //
 //	case 3:
 //		Employees.readFromTable();
@@ -65,7 +70,7 @@ public class Employees {
 		      ) {		      
 		          String sql = "CREATE TABLE Employees(" +"  id Int Primary Key AUTO_INCREMENT, "
 		       + " employee_type_id int REFERENCES Employee_Type(id), "
-		       + " room_id int REFERENCES Hotels(id), "
+		       + " room_id int REFERENCES Rooms(id), "
 		      + " created_date Date not null,"
 		      +"updated_date Date,"+"is_Active Boolean not null)"; 
 		         
@@ -82,4 +87,58 @@ public class Employees {
 			            System.err.println(ex);
 		   }
 		}
+	public static void insertIntoTable(int f){
+	   	 final String url = "jdbc:mysql://localhost:3306/HotelDBMS";
+
+	 	   final String user = "root";
+	 	   final String pass = "root";
+	 	 Scanner scanner = new Scanner(System.in);
+	 	
+	 	 
+//	 	 System.out.print("which hotel you want");
+//		 String input=scanner.next();
+//		 String query="select id from guests where guest_name=String";
+	 	 
+	 	 
+	 	 
+	 	 
+	 	 
+	 	 
+			 String employee_type_name="MM";
+			 Date created_date=new Date(System.currentTimeMillis());
+			 Date updated_date= new Date(System.currentTimeMillis());
+			 boolean is_Active=true;
+			 
+			 Random rn = new Random();
+		  	   Integer numberToAdd = rn.nextInt();
+			    Connection conn = null;
+
+			 for(int i=0;i<f;i++) {
+				  String sql = "insert into Employee_Type values ("+i+", '"
+			 +employee_type_name+i+"','"+
+						  created_date+"', '"+updated_date+"', "+is_Active+")";
+
+			  try{
+				  Driver driver = (Driver) Class.forName("com.mysql.cj.jdbc.Driver")
+						  .newInstance();
+	           DriverManager.registerDriver(driver);
+	           conn = DriverManager.getConnection(url, user,
+	                   pass);
+	           Statement stmt = conn.createStatement();
+//		  		 ResultSet rs=stmt.executeQuery(query);
+
+	           int m = stmt.executeUpdate(sql);
+	         if (m >=0)
+	           System.out.println(
+	                   "inserted successfully : " + sql);
+	       else
+	           System.out.println("insertion failed");
+	       conn.close();
+	       
+				 }catch (Exception ex) {
+			         System.out.println(ex);
+			     }
+			 }
+	        
+			    }
 }

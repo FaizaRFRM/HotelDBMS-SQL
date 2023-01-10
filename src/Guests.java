@@ -32,7 +32,9 @@ public class Guests {
 	break;
 
 	case 2:
-		Guests.insertIntoTable();
+		System.out.println ("Enter the number of records:");
+	  	int f=sc.nextInt();
+	  	Guests.insertIntoTable(f);
 	break;
 
 	case 3:
@@ -75,7 +77,8 @@ public class Guests {
 		       + " room_id int REFERENCES Rooms(id), "
 		       + " hotel_id int REFERENCES Hotels(id), "
 		      + " created_date Date not null,"
-		      +"updated_date Date,"+"is_Active Boolean not null)"; 
+		      +"updated_date Date,"
+		      +"is_Active Boolean not null)"; 
 		                                           
 		          
 		         int m=stmt.executeUpdate(sql);
@@ -92,51 +95,64 @@ public class Guests {
 		   }
 		}
 	
-	public static void insertIntoTable(){
+	public static void insertIntoTable( int s){
+	
 		 final String url = "jdbc:mysql://localhost:3306/HotelDBMS";
 
 		   final String user = "root";
 		   final String pass = "root";
 		   
 		 Scanner scanner = new Scanner(System.in);
-		System.out.println ("Enter the number of Rooms:");
-	  Integer numOfHotels=scanner.nextInt();
-	  
-		 int room_type_id=215;
-		 int hotel_id=84;
+
+		 int guest_accompanying_members=215654;
+		 int guest_payment_amount=215654;
+		 String guest_name="Muscat";
+		 String guest_phone="97668779";
+		 int hotel_id=2;
+		 int room_id=2;
+		 
+//		 System.out.print("which hotel you want");
+//		 String input=scanner.next();
+//		 String query="select id from hotels where hotel_name=String";
+		 
+		 
 		 Date created_date=new Date(System.currentTimeMillis());
 		 Date updated_date= new Date(System.currentTimeMillis());
 		 boolean is_Active=true;
-		 
-		 Random rn = new Random();
-	  	   Integer numberToAdd = rn.nextInt(100);
-
-		 for(int i=0;i<=numOfHotels;i++) {
-			  String sql = "insert into Rooms values ("+i+numberToAdd+", '"
-		 +room_type_id+i+", '" +hotel_id+i+"', '"+created_date+"', '"+updated_date+"', "+is_Active+")";
-
 		    Connection conn = null;
-		  try{
-			  Driver driver = (Driver) Class.forName("com.mysql.cj.jdbc.Driver")
-					  .newInstance();
-	        DriverManager.registerDriver(driver);
-	        conn = DriverManager.getConnection(url, user,
-	                pass);
-	        Statement stmt = conn.createStatement();
-	        int m = stmt.executeUpdate(sql);
-	      if (m >=  0)
-	        System.out.println(
-	                "inserted successfully : " + sql);
-	    else
-	        System.out.println("insertion failed");
-	    conn.close();
-			 }catch (Exception ex) {
-		         System.out.println(ex);
-		     }
-		 }
-	     
-		    }
 
+		 Random rn = new Random();
+		  Integer num=rn.nextInt();
+
+		 for(int i=0;i<=s;i++) {
+			 
+			  String sql = "insert into Guests(guest_name,guest_phone,guest_accompanying_members ,guest_payment_amount ,room_id ,hotel_id ,created_date ,updated_date,is_Active)"+
+        "values("+guest_name+"," +guest_phone+","+guest_accompanying_members*50+","+guest_payment_amount+","+room_id+","+hotel_id  +","+created_date+","+updated_date+","+is_Active+")";
+			 
+		    try{
+		    	 Driver driver = (Driver) Class.forName("com.mysql.cj.jdbc.Driver")
+						  .newInstance();
+	           DriverManager.registerDriver(driver);
+	           conn = DriverManager.getConnection(url, user,
+	                   pass);
+	           Statement stmt = conn.createStatement();
+	           
+	           int m = stmt.executeUpdate(sql);
+	         if (m >=0)
+	           System.out.println(
+	                   sql+"inserted successfully : ");
+	       else
+	           System.out.println("insertion failed");
+	       conn.close();
+	       
+				 }catch (Exception ex) {
+			         System.out.println(ex);
+			     }
+			 }
+	}
+	
+
+	
 
 		public static void readFromTable(){
 			final String url = "jdbc:mysql://localhost:3306/HotelDBMS";
@@ -146,14 +162,14 @@ public class Guests {
 			   Scanner scanner = new Scanner(System.in);
 			  	System.out.println ("input number of records you want to show");
 			  	int number=scanner.nextInt();
-			      int count=0;
+			     
 			      
 			 try(Connection conn = DriverManager.getConnection(url, user, pass);
 			         Statement stmt = conn.createStatement();
 			      ) {
 				 
 				 ResultSet rs=stmt.executeQuery("SELECT * FROM Rooms");
-				 while(rs.next()&&count<number) 
+				 while(rs.next()) 
 				 { 
 					 int id=rs.getInt("id");
 					int room_type_id=rs.getInt("room_type_id");
@@ -167,7 +183,7 @@ public class Guests {
 				     System.out.println("created_date" +created_date);
 				     System.out.println("updated_date" +updated_date);
 				     System.out.println("is_Active"+is_Active);
-				     count++;
+				    
 				    
 			 
 			         conn.close() ; 
