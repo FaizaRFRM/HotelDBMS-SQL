@@ -214,9 +214,9 @@ public static void insertIntoTable(){
 		 try {
 		 Scanner scanner = new Scanner(System.in);
 
-		  	System.out.println ("input id you want to update");
-		      Integer id=scanner.nextInt();
-		      String sql = "update Room_Type set room_type_name='pp' where id="+id;
+//		  	System.out.println ("input id you want to update");
+//		      Integer id=scanner.nextInt();
+		      String sql = "update Room_Type set room_type_name='ATTENDANT' where id=[0-10]";
 				 
 				 Connection conn = null;
 		      
